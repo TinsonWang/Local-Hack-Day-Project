@@ -4,6 +4,8 @@ int main(int argc, char* argv[])
 {
     FILE* filter;
     FILE* text;
+    int wordState;
+    wordState = 0;
 
     if ( (filter = fopen("list.txt", "r") != NULL) )
     {
@@ -24,5 +26,5 @@ int main(int argc, char* argv[])
     }
 
     return 0;
-    
+
 }
