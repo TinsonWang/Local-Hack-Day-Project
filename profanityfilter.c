@@ -1,33 +1,36 @@
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
 #define MAXSIZE 999
 
 int main(int argc, char* argv[])
 {
-<<<<<<< HEAD
-    FILE* filter;
-    FILE* text;
-    int wordState;
-    wordState = 0;
-=======
     FILE* f1;
     FILE* f2;
-    FILE* f3;
+    File* usrFile;
+
     char badLog[MAXSIZE][MAXSIZE];
     char goodLog[MAXSIZE][MAXSIZE];
     char textLog[MAXSIZE][MAXSIZE];
-    int i = 0;
 
->>>>>>> 1bb23294fb9382c91b9c7800b7fa766563937214
+    char line[1000];
+    int lineState = 0;
+    char word[20];
+    int charCount = 0;
+    int randNo;
+    int RAND_MAX = 100;
+    int badword = 0; /* boolean for bad word check*/
+    int i, j, k;
 
     if ( (f1 = fopen("badWords.txt", "r")) != NULL )
     {
-	    while (fgets(badLog[i], MAXSIZE, f1) != NULL) 
+	    while (fgets(badLog[i], MAXSIZE, f1) != NULL)
 	    {
 		    i++;
 	    }
 
-    } else 
+    } else
     {
 	    printf ("ERROR: File cannot be opened\n");
 	    exit(1);
@@ -36,38 +39,63 @@ int main(int argc, char* argv[])
 
     if ( (f2 = fopen("goodWords.txt", "r")) != NULL )
     {
-	    while (fgets(goodLog[i], MAXSIZE, f2) != NULL) 
+	    while (fgets(goodLog[i], MAXSIZE, f2) != NULL)
 	    {
 		    i++;
 	    }
 
-    }else 
+    }else
     {
 	    printf ("ERROR: File cannot be opened\n");
 	    exit(1);
     }
 
-    i = 0;
+    /*opening the usr file */
+    if ( (usrFile = fopen("argv[1]", "r") != NULL) ){
 
-    if ( (f3 = fopen("text.txt", "r")) != NULL )
-    {
-	    while (fgets(textLog[i], MAXSIZE, f3) != NULL) 
-	    {
-		    i++;
-	    }
-
-    } else 
-    {
-	    printf ("ERROR: File cannot be opened\n");
-	    exit(1);
+    }else{
+      printf("error - file does not exists\n" );
+      exit(0);
     }
 
-    
+    while ( fgets ( line, MAXSIZE, usrFile ) != NULL ) {
+      for (i = 0; i < strlen(line) ; i++) {
+
+        if (line[i] == ' ' || line[i] == '\n' || line[i] == '\t') {
+          word[charCount] = '\0'
+
+          for (j = 0; j < 500; j++) {
+            if (strcmp(word, badLog[j]) == 0) {
+              badword = 1;
+            }
+          }
+
+          if (badword == 1) {
+            randNo = random();
+            printf("%s", goodLog[randNo] );
+          } else{
+            printf("%s",word );
+          }
+
+          lineState = 0;
+        } else if (lineState == 0){
+
+          for (k = 0; k < 20; k++) {
+            word[k]='\0'
+          }
+
+          lineState = 1;
+          charCount = 0;
+        }
+
+        if (lineState == 1) {
+          word[charCount++] = line[i];
+        }
+
+      }
+    }
+
+
     return 0;
-<<<<<<< HEAD
 
 }
-=======
-    
-}
->>>>>>> 1bb23294fb9382c91b9c7800b7fa766563937214
